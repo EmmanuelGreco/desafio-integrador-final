@@ -31,37 +31,37 @@ public class PeliculaApiController {
 	private PeliculaService peliculaService;
 	
 	@GetMapping
-	public ResponseEntity<List<Pelicula>> getAllPeliculas() {
-		List<Pelicula> peliculas = peliculaService.getAllPeliculas();
-		return new ResponseEntity<>(peliculas, HttpStatus.OK);
-	}
+    public ResponseEntity<List<Pelicula>> getAllPeliculas() {
+        List<Pelicula> peliculas = peliculaService.getAllPeliculas();
+        return new ResponseEntity<>(peliculas, HttpStatus.OK);
+    }
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Pelicula> getPeliculaById(@PathVariable("id") int id) {
-		Pelicula pelicula = peliculaService.getPeliculaById(id);
-		if (pelicula == null) {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-		logger.info("Consulta por id de Película: {}. Respuesta: {} {}", id, pelicula, ". Fin log");
-		logger.error("Se produjo un error. ", new Exception("Error"));
-		return new ResponseEntity<>(pelicula, HttpStatus.OK);
-	}
+    public ResponseEntity<Pelicula> getPeliculaById(@PathVariable("id") int id) {
+        Pelicula pelicula = peliculaService.getPeliculaById(id);
+        if (pelicula == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        logger.info("Consulta por id de Película: {}. Respuesta: {} {}", id, pelicula, ". Fin log");
+        logger.error("Se produjo un error. ", new Exception("Error"));
+        return new ResponseEntity<>(pelicula, HttpStatus.OK);
+    }
 	
 	@PostMapping
-	public ResponseEntity<Void> addPelicula(@RequestBody Pelicula pelicula) {
-		peliculaService.addPelicula(pelicula);
-		return new ResponseEntity<>(HttpStatus.CREATED);		
-	}
+    public ResponseEntity<Void> addPelicula(@RequestBody Pelicula pelicula) {
+        peliculaService.addPelicula(pelicula);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updatePelicula(@PathVariable("id") int id, @RequestBody Pelicula pelicula) {
-		peliculaService.updatePelicula(id, pelicula);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+    public ResponseEntity<Void> updatePelicula(@PathVariable("id") int id, @RequestBody Pelicula pelicula) {
+        peliculaService.updatePelicula(id, pelicula);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deletePelicula(@PathVariable("id") int id) {
-		peliculaService.deletePelicula(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+    public ResponseEntity<Void> deletePelicula(@PathVariable("id") int id) {
+        peliculaService.deletePelicula(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
