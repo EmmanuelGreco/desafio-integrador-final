@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.educacionit.entity.Pelicula;
+import com.educacionit.repository.PeliculaRepository;
 import com.educacionit.service.PeliculaService;
 
 @Service("peliculaService")
@@ -22,7 +23,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 	
 	@Override
 	public List<Pelicula> getAllPeliculas() {
-		return peliculaRepository.finAll();
+		return peliculaRepository.findAll();
 	}
 
 	@Override
