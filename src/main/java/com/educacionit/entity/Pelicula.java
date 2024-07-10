@@ -27,8 +27,8 @@ public class Pelicula {
 			example = "01")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Codigo")
-    private Integer codigo;
+	@Column(name = "ID")
+    private Integer id;
     
     @Schema(description = "Título de la película", requiredMode = Schema.RequiredMode.REQUIRED,
     		example = "Oppenheimer")
@@ -72,11 +72,11 @@ public class Pelicula {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pelicula pelicula = (Pelicula) o;
-        return Objects.equals(codigo, pelicula.codigo);
+        return Objects.equals(id, pelicula.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(codigo);
+        return Objects.hash(id);
     }
 }
