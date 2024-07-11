@@ -28,7 +28,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	@Override
 	public Pelicula getPeliculaById(int id) {
-		return peliculaRepository.findById(id);
+		return peliculaRepository.findById(id).orElse(null);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	@Override
 	public void updatePelicula(int id, Pelicula pelicula) {
-		Pelicula existePelicula = peliculaRepository.findById(id);
+		Pelicula existePelicula = peliculaRepository.findById(id).orElse(null);
 		if (existePelicula != null) {
 			existePelicula.setTitulo(pelicula.getTitulo());
 			existePelicula.setDirector(pelicula.getDirector());
@@ -51,6 +51,6 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	@Override
 	public void deletePelicula(int id) {
-		peliculaRepository.delete(id);		
+		peliculaRepository.deleteById(id);		
 	}
 }

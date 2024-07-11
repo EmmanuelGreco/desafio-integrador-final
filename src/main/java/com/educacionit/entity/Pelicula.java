@@ -12,9 +12,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@NoArgsConstructor
 @Setter
 @Getter
 @ToString
@@ -47,17 +49,14 @@ public class Pelicula {
     
     @Schema(description = "Imagen de portada de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED,
     		example = "https://dx35vtwkllhj9.cloudfront.net/universalstudios/oppenheimer-watch/images/regions/us/onesheet.jpg")
-    @Column(name="Portada", nullable=true, length=100)
+    @Column(name="Portada", nullable=true, length=255)
     private String portada;
     
     @Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED,
     		example = "6399.99")
     @Column(name="Precio", nullable=true, length=25)
     private Float precio;
-    
-    public Pelicula() {
-    }
-    
+        
     public Pelicula(String titulo) {
     	super();
     	this.titulo = titulo;
