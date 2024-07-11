@@ -1,0 +1,34 @@
+/* styles.css */
+.card {
+    width: 100%; /* Ancho máximo de la tarjeta */
+    max-width: 300px; /* Ancho máximo recomendado para la tarjeta */
+}
+
+.card-img-top {
+    max-height: 300px; /* Altura máxima de la imagen en las tarjetas */
+    object-fit: cover; /* Ajuste para cubrir el tamaño sin deformar */
+}
+
+.card-body {
+    height: 150px; /* Altura máxima del cuerpo de la tarjeta */
+}
+
+.modal-dialog {
+    max-width: 80%; /* Ancho máximo del modal */
+}
+
+.modal-body img {
+    max-width: 100%; /* Ancho máximo de la imagen dentro del modal */
+    height: auto; /* Altura automática para mantener la proporción */
+    display: block; /* Asegura que la imagen se muestre como un bloque */
+    margin: 0 auto; /* Centra la imagen horizontalmente */
+    object-fit: contain; /* Ajuste para mantener la imagen dentro del contenedor */
+}
+
+.modal-content {
+	width: 30%;
+	border-radius: 2rem;
+	justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    margin: auto;
+}

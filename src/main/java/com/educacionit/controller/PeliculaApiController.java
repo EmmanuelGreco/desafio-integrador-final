@@ -20,23 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.educacionit.entity.Pelicula;
 import com.educacionit.service.PeliculaService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/peliculas")
+@Tag(name = "Administrador de Películas", description = "Endpoints para administrar películas")
 public class PeliculaApiController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(PeliculaApiController.class);
-	
-	@Autowired
-	@Qualifier("peliculaService")
-	private PeliculaService peliculaService;
-	
-	@GetMapping
+
+    private static final Logger logger = LoggerFactory.getLogger(PeliculaApiController.class);
+
+    @Autowired
+    @Qualifier("peliculaService")
+    private PeliculaService peliculaService;
+
+    @GetMapping
     public ResponseEntity<List<Pelicula>> getAllPeliculas() {
         List<Pelicula> peliculas = peliculaService.getAllPeliculas();
         return new ResponseEntity<>(peliculas, HttpStatus.OK);
     }
-	
-	@GetMapping("/{id}")
+
+    @GetMapping("/{id}")
     public ResponseEntity<Pelicula> getPeliculaById(@PathVariable("id") int id) {
         Pelicula pelicula = peliculaService.getPeliculaById(id);
         if (pelicula == null) {
@@ -46,20 +49,20 @@ public class PeliculaApiController {
         logger.error("Se produjo un error. ", new Exception("Error"));
         return new ResponseEntity<>(pelicula, HttpStatus.OK);
     }
-	
-	@PostMapping
+
+    @PostMapping
     public ResponseEntity<Void> addPelicula(@RequestBody Pelicula pelicula) {
         peliculaService.addPelicula(pelicula);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-	
-	@PutMapping("/{id}")
+
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updatePelicula(@PathVariable("id") int id, @RequestBody Pelicula pelicula) {
         peliculaService.updatePelicula(id, pelicula);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-	
-	@DeleteMapping("/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePelicula(@PathVariable("id") int id) {
         peliculaService.deletePelicula(id);
         return new ResponseEntity<>(HttpStatus.OK);
