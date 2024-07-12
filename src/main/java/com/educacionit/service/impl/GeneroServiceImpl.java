@@ -17,5 +17,4 @@ public class GeneroServiceImpl implements GeneroService {
 	@Autowired
 	@Qualifier("generoRepository")
 	private GeneroRepository generoRepository;
-
 }

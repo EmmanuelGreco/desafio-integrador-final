@@ -1,5 +1,6 @@
 package com.educacionit.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ public class Role {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(nullable = false, length = 255, unique = true)
+	@Schema(description = "Nombre del rol", requiredMode = Schema.RequiredMode.REQUIRED, example = "ROLE_ADMIN")
+	@Column(nullable = false, length = 100, unique = true)
 	private String name;
 }

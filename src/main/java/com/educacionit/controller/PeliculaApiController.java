@@ -45,6 +45,7 @@ public class PeliculaApiController {
 		if (pelicula == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+		
 		logger.info("Consulta por id de Película: {}. Respuesta: {} {}", id, pelicula, ". Fin log");
 		logger.error("Se produjo un error. ", new Exception("Error"));
 		return new ResponseEntity<>(pelicula, HttpStatus.OK);
