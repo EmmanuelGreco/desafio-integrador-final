@@ -55,7 +55,7 @@ public class PeliculaApiController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Pelicula> getPeliculaById(@PathVariable("id") Integer id) {
 		Pelicula unaPelicula = peliculaService.getPeliculaById(id);
-		
+
 		if (unaPelicula == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}		
@@ -79,7 +79,7 @@ public class PeliculaApiController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> updatePelicula(@PathVariable("id") Integer id, @RequestBody Pelicula peliculaModificada) throws Exception {
 		Pelicula existingPelicula = peliculaService.getPeliculaById(id);
-		
+
 		if (existingPelicula == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -94,7 +94,7 @@ public class PeliculaApiController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> deletePelicula(@PathVariable("id") Integer id) {
 		Pelicula pelicula = peliculaService.getPeliculaById(id);
-		
+
 		if (pelicula == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

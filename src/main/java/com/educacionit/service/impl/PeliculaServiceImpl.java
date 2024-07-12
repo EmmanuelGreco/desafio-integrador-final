@@ -54,7 +54,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 			existingPelicula.setUrl(peliculaModificada.getUrl());
 			existingPelicula.setPortada(peliculaModificada.getPortada());
 			existingPelicula.setPrecio(peliculaModificada.getPrecio());
-			
+
 			return peliculaRepository.save(existingPelicula);
 		} else {
 			throw new Exception("La Película con ID: " + id + " NO Existe en la BD!");

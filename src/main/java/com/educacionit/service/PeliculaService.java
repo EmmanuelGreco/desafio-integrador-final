@@ -13,7 +13,7 @@ public interface PeliculaService {
 	public List<Pelicula> getAllPeliculas();
 
 	public Pelicula getPeliculaById(Integer id);
-	
+
 	public Optional<List<Pelicula>> findByTitulo(String titulo);
 
 	public Pelicula addPelicula(Pelicula pelicula);

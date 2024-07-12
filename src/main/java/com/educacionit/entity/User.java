@@ -33,8 +33,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "Modelo de Cliente")
 @Entity
+@Schema(description = "Modelo de Cliente")
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User implements UserDetails {
 

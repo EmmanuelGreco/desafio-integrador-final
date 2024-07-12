@@ -20,7 +20,7 @@ import com.educacionit.repository.UserRepository;
 
 @Service
 public class AuthService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -45,7 +45,7 @@ public class AuthService {
 		Role defaultRol = roleRepository.findByName("SOCIO").get();
 		user.addRole(defaultRol);
 		userRepository.save(user);
-		
+
 		AuthResponse authResponse = new AuthResponse();
 		authResponse.setToken(jwtService.getToken(user));
 
