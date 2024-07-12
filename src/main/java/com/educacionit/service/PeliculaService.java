@@ -1,6 +1,7 @@
 package com.educacionit.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -9,13 +10,15 @@ import com.educacionit.entity.Pelicula;
 @Service("peliculaService")
 public interface PeliculaService {
 
-	List<Pelicula> getAllPeliculas();
+	public List<Pelicula> getAllPeliculas();
 
-	Pelicula getPeliculaById(int id);
+	public Pelicula getPeliculaById(Integer id);
 
-	void addPelicula(Pelicula pelicula);
+	public Optional<List<Pelicula>> findByTitulo(String titulo);
 
-	void updatePelicula(int id, Pelicula pelicula);
+	public Pelicula addPelicula(Pelicula pelicula);
 
-	void deletePelicula(int id);
+	public Pelicula updatePelicula(Integer id, Pelicula peliculaModificada) throws Exception;
+
+	public void deletePelicula(Integer id);
 }
