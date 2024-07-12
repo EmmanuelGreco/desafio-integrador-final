@@ -14,13 +14,13 @@ import com.educacionit.service.PeliculaService;
 
 @Service("peliculaService")
 public class PeliculaServiceImpl implements PeliculaService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(PeliculaServiceImpl.class);
 
 	@Autowired
 	@Qualifier("peliculaRepository")
 	private PeliculaRepository peliculaRepository;
-	
+
 	@Override
 	public List<Pelicula> getAllPeliculas() {
 		return peliculaRepository.findAll();
@@ -33,8 +33,8 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	@Override
 	public void addPelicula(Pelicula pelicula) {
-		//logger.info("Agregar película con título {}: . Toda la clase: {}", pelicula.getTitulo(), pelicula);		
-		peliculaRepository.save(pelicula);		
+		// logger.info("Agregar película con título {}: . Toda la clase: {}", pelicula.getTitulo(), pelicula);
+		peliculaRepository.save(pelicula);
 	}
 
 	@Override
@@ -51,6 +51,6 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 	@Override
 	public void deletePelicula(int id) {
-		peliculaRepository.deleteById(id);		
+		peliculaRepository.deleteById(id);
 	}
 }

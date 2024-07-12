@@ -19,43 +19,43 @@ import lombok.ToString;
 @Getter
 @ToString
 @Entity
-@Schema(description = "Modelo de Generos")
-@Table(name="generos")
+@Schema(description = "Modelo de Géneros")
+@Table(name = "generos")
 public class Genero {
-	
-	@Schema(description = "Código del género", requiredMode = Schema.RequiredMode.REQUIRED,
-			example = "01")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Integer id;
-    
-	@Schema(description = "Nombre del género", requiredMode = Schema.RequiredMode.REQUIRED,
-    		example = "Suspenso")
-    @Column(name="nombre", nullable=false, length=50)
-    private String nombre;
-    
-    public Genero() {
-    }
-    
-    public Genero(String nombre) {
-    	super();
-    	this.nombre = nombre;
-    }
-        
-    @OneToMany(mappedBy = "genero")
-    private List<Pelicula> peliculas;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Genero genero = (Genero) o;
-        return Objects.equals(id, genero.id);
-    }
+	@Schema(description = "Código del género", requiredMode = Schema.RequiredMode.REQUIRED, example = "01")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Schema(description = "Nombre del género", requiredMode = Schema.RequiredMode.REQUIRED, example = "Suspenso")
+	@Column(name = "nombre", nullable = false, length = 50)
+	private String nombre;
+
+	public Genero() {
+	}
+
+	public Genero(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
+
+	@OneToMany(mappedBy = "genero")
+	private List<Pelicula> peliculas;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Genero genero = (Genero) o;
+		return Objects.equals(id, genero.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }
