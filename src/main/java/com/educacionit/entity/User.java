@@ -48,8 +48,8 @@ public class User implements UserDetails {
 	private String email;
 
 	@Schema(description = "Nombre del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "Nombre Apellido")
-	@Column(name = "nombre", nullable = false, length = 100)
-	private String nombre;
+	@Column(name = "fullname", nullable = false, length = 100)
+	private String fullname;
 
 	@Schema(description = "Password del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "**********")
 	@Column(name = "password", nullable = false, length = 100)
