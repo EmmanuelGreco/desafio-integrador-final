@@ -22,60 +22,58 @@ import lombok.ToString;
 @ToString
 @Entity
 @Schema(description = "Modelo de Películas")
-@Table(name="peliculas")
+@Table(name = "peliculas")
 public class Pelicula {
-	
-	@Schema(description = "Código de la película", requiredMode = Schema.RequiredMode.REQUIRED,
-			example = "01")
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-    private Integer id;
-    
-    @Schema(description = "Título de la película", requiredMode = Schema.RequiredMode.REQUIRED,
-    		example = "Oppenheimer")
-    @Column(name="Titulo", nullable=false, length=50)
-    private String titulo;
-    
-    @Schema(description = "Director de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-    		example = "Christopher Nolan")
-    @Column(name="Director", nullable=true, length=50)
-    private String director;
-    
-    @Schema(description = "Sitio oficial de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-    		example = "https://www.uphe.com/movies/oppenheimer")
-    @Column(name="URL", nullable=true, length=100)
-    private String url;
-    
-    @Schema(description = "Imagen de portada de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-    		example = "https://dx35vtwkllhj9.cloudfront.net/universalstudios/oppenheimer-watch/images/regions/us/onesheet.jpg")
-    @Column(name="Portada", nullable=true, length=255)
-    private String portada;
-    
-    @Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED,
-    		example = "6399.99")
-    @Column(name="Precio", nullable=true, length=25)
-    private Float precio;
-        
-    public Pelicula(String titulo) {
-    	super();
-    	this.titulo = titulo;
-    }
 
-    @ManyToOne
-    @JoinColumn(name = "genero_id")
-    private Genero genero;
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pelicula pelicula = (Pelicula) o;
-        return Objects.equals(id, pelicula.id);
-    }
+	@Schema(description = "Código de la película", requiredMode = Schema.RequiredMode.REQUIRED, example = "01")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Schema(description = "Título de la película", requiredMode = Schema.RequiredMode.REQUIRED, example = "Oppenheimer")
+	@Column(name = "titulo", nullable = false, length = 50)
+	private String titulo;
+
+	@Schema(description = "Director de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "Christopher Nolan")
+	@Column(name = "director", nullable = true, length = 50)
+	private String director;
+
+	@Schema(description = "Sitio oficial de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, 
+			example = "https://www.uphe.com/movies/oppenheimer")
+	@Column(name = "url", nullable = true, length = 100)
+	private String url;
+
+	@Schema(description = "Imagen de portada de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, 
+			example = "https://dx35vtwkllhj9.cloudfront.net/universalstudios/oppenheimer-watch/images/regions/us/onesheet.jpg")
+	@Column(name = "portada", nullable = true, length = 255)
+	private String portada;
+
+	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "6399.99")
+	@Column(name = "precio", nullable = true, length = 25)
+	private Float precio;
+
+	public Pelicula(String titulo) {
+		super();
+		this.titulo = titulo;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "genero_id")
+	private Genero genero;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Pelicula pelicula = (Pelicula) o;
+		return Objects.equals(id, pelicula.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }

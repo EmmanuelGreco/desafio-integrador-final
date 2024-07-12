@@ -11,11 +11,10 @@ import com.educacionit.service.GeneroService;
 
 @Service("generoService")
 public class GeneroServiceImpl implements GeneroService {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(GeneroServiceImpl.class);
-	
+
 	@Autowired
 	@Qualifier("generoRepository")
 	private GeneroRepository generoRepository;
-
 }

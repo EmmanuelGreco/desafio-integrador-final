@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.educacionit.entity.Pelicula;
 
 @Repository("peliculaRepository")
-public interface PeliculaRepository extends JpaRepository<Pelicula, Integer>{
-	
+public interface PeliculaRepository extends JpaRepository<Pelicula, Integer> {
+
 }
