@@ -52,6 +52,14 @@ public class Pelicula {
 	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "6399.99")
 	@Column(name = "precio", nullable = true, length = 25)
 	private Float precio;
+	
+	public Pelicula(String titulo, String director, String url, String portada, Float precio) {
+		this.titulo = titulo;
+        this.director = director;
+        this.url = url;
+        this.portada = portada;
+        this.precio = precio;
+	}
 
 	public Pelicula(String titulo) {
 		super();

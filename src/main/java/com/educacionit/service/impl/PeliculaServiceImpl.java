@@ -1,6 +1,7 @@
 package com.educacionit.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,30 +28,41 @@ public class PeliculaServiceImpl implements PeliculaService {
 	}
 
 	@Override
-	public Pelicula getPeliculaById(int id) {
-		return peliculaRepository.findById(id).orElse(null);
+	public Pelicula getPeliculaById(Integer id) {
+		Pelicula unaPelicula = peliculaRepository.findById(id).orElse(null);
+		return unaPelicula;
 	}
 
 	@Override
-	public void addPelicula(Pelicula pelicula) {
-		// logger.info("Agregar película con título {}: . Toda la clase: {}", pelicula.getTitulo(), pelicula);
-		peliculaRepository.save(pelicula);
+	public Optional<List<Pelicula>> findByTitulo(String titulo) {
+		return peliculaRepository.findByTituloContainingIgnoreCase(titulo);
 	}
 
 	@Override
-	public void updatePelicula(int id, Pelicula pelicula) {
-		Pelicula existePelicula = peliculaRepository.findById(id).orElse(null);
-		if (existePelicula != null) {
-			existePelicula.setTitulo(pelicula.getTitulo());
-			existePelicula.setDirector(pelicula.getDirector());
-			existePelicula.setUrl(pelicula.getUrl());
-			existePelicula.setPortada(pelicula.getPortada());
-			existePelicula.setPrecio(pelicula.getPrecio());
+	public Pelicula addPelicula(Pelicula pelicula) {
+		return peliculaRepository.save(pelicula);
+	}
+
+	@Override
+	public Pelicula updatePelicula(Integer id, Pelicula peliculaModificada) throws Exception {
+		Optional<Pelicula> existingPeliculaOptional = peliculaRepository.findById(id);
+
+		if (existingPeliculaOptional.isPresent()) {
+			Pelicula existingPelicula = existingPeliculaOptional.get();
+			existingPelicula.setTitulo(peliculaModificada.getTitulo());
+			existingPelicula.setDirector(peliculaModificada.getDirector());
+			existingPelicula.setUrl(peliculaModificada.getUrl());
+			existingPelicula.setPortada(peliculaModificada.getPortada());
+			existingPelicula.setPrecio(peliculaModificada.getPrecio());
+			
+			return peliculaRepository.save(existingPelicula);
+		} else {
+			throw new Exception("La Película con ID: " + id + " NO Existe en la BD!");
 		}
 	}
 
 	@Override
-	public void deletePelicula(int id) {
+	public void deletePelicula(Integer id) {
 		peliculaRepository.deleteById(id);
 	}
 }
