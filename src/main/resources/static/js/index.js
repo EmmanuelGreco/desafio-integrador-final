@@ -92,7 +92,8 @@ $(document).ready(function() {
     });
 
     $(document).on('click', '.btn-detail', function() {
-        const id = $(this).data('id');
-        loadMovieDetail(id);
-    });
+	    const id = $(this).data('id');
+	    console.log('Detalle de película ID:', id); // Verifica que el ID es correcto
+	    loadMovieDetail(id);
+	});
 });

@@ -23,7 +23,7 @@ import lombok.ToString;
 @Table(name = "generos")
 public class Genero {
 
-	@Schema(description = "Código del género", requiredMode = Schema.RequiredMode.REQUIRED, example = "01")
+	@Schema(description = "ID del género", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

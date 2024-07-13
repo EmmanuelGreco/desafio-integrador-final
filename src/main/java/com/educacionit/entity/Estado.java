@@ -19,15 +19,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "estados_ordenes")
+public class Estado {
 
-	@Schema(description = "ID del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
+	@Schema(description = "ID del estado", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Schema(description = "Nombre del rol", requiredMode = Schema.RequiredMode.REQUIRED, example = "ROLE_ADMIN")
+	@Schema(description = "Estado del estado", requiredMode = Schema.RequiredMode.REQUIRED, example = "Pagado")
 	@Column(nullable = false, length = 100, unique = true)
 	private String name;
 }
