@@ -1,10 +1,14 @@
 package com.educacionit.entity;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,6 +24,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
@@ -44,20 +49,30 @@ public class User implements UserDetails {
 	private Integer id;
 
 	@Schema(description = "Email del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "user@example.com")
-	@Column(name = "email", nullable = false, length = 100, unique = true)
+	@Column(nullable = false, length = 100, unique = true)
 	private String email;
 
 	@Schema(description = "Nombre del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "Nombre Apellido")
-	@Column(name = "fullname", nullable = false, length = 100)
+	@Column(nullable = false, length = 100)
 	private String fullname;
 
 	@Schema(description = "Password del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "**********")
-	@Column(name = "password", nullable = false, length = 100)
+	@Column(nullable = false, length = 100)
 	private String password;
+
+	@Column(nullable = false)
+	private boolean activo = true;
+
+	@Column(name = "fecha_alta", nullable = false)
+	private LocalDate fechaAlta = LocalDate.now();
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		for (Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+		}
+		return authorities;
 	}
 
 	@Override
@@ -79,6 +94,11 @@ public class User implements UserDetails {
 		return this.email;
 	}
 
+	@PrePersist
+	protected void onCreate() {
+		this.fechaAlta = LocalDate.now();
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -96,6 +116,6 @@ public class User implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return true;
+		return this.activo;
 	}
 }
