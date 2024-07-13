@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,8 @@ public class JwtService {
 	}
 
 	private String getToken(Map<String, Object> extraClaims, UserDetails user) {
+		extraClaims.put("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
+
 		return Jwts.builder().setClaims(extraClaims).setSubject(user.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))

@@ -32,12 +32,15 @@ public class SecurityConfig {
 		return http
 				.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(authRequest -> authRequest
+					.requestMatchers("/").permitAll()
 					.requestMatchers("/auth/**", "/login").permitAll()
 					.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 					.requestMatchers("/css/**", "/js/**").permitAll()
 					.requestMatchers("/api/v1/peliculas", "/api/v1/peliculas/search").permitAll()
-					.requestMatchers("/favicon.ico", "/").permitAll().requestMatchers("/admin").hasRole("ADMIN")
-					.requestMatchers("/user").hasRole("SOCIO").anyRequest().authenticated())
+					.requestMatchers("/favicon.ico").permitAll()
+					.requestMatchers("/admin/**").hasRole("ADMIN")
+					.requestMatchers("/socio/**").hasRole("SOCIO")
+					.anyRequest().authenticated())
 			.sessionManagement(sessionManager -> sessionManager
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 			.authenticationProvider(authProvider)

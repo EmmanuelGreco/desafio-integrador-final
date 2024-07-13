@@ -36,13 +36,13 @@ public class AuthService {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	public AuthResponse register(RegisterRequest request) {		
+	public AuthResponse register(RegisterRequest request) {
 		User user = new User();
 		user.setEmail(request.getEmail());
 		user.setFullname(request.getFullname());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-		Role defaultRol = roleRepository.findByName("SOCIO").get();
+		Role defaultRol = roleRepository.findByName("ROLE_SOCIO").get();
 		user.addRole(defaultRol);
 		userRepository.save(user);
 
@@ -53,14 +53,16 @@ public class AuthService {
 	}
 
 	public AuthResponse login(LoginRequest request) {
+
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
 		UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
-		String token = jwtService.getToken(user);
 
+		String token = jwtService.getToken(user);
 		AuthResponse authResponse = new AuthResponse();
+		
 		authResponse.setToken(token);
 
 		return authResponse;

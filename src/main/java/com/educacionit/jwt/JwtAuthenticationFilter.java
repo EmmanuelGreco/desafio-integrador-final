@@ -15,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -23,7 +24,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private JwtService jwtService;
-
+	
 	@Autowired
 	private UserDetailsService userDetailsService;
 
@@ -37,7 +38,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 			filterChain.doFilter(request, response);
 			return;
 		}
-
 		username = jwtService.getUsernameFromToken(token);
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -50,17 +50,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 			}
 		}
-
 		filterChain.doFilter(request, response);
 	}
 
 	private String getTokenFromRequest(HttpServletRequest request) {
 		final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-
+		
 		if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
 			return authHeader.substring(7);
 		}
-
+		Cookie[] cookies = request.getCookies();
+		if (request.getCookies() != null) {
+			for (Cookie cookie : request.getCookies()) {
+				if ("auth_token".equals(cookie.getName())) {
+					return cookie.getValue();
+				}
+			}
+		}
 		return null;
 	}
 }
