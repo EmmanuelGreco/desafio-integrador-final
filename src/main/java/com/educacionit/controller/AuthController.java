@@ -12,11 +12,12 @@ import com.educacionit.dto.LoginRequest;
 import com.educacionit.dto.RegisterRequest;
 import com.educacionit.service.AuthService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "1. Autenticación de usuarios", description = "Endpoints para el registro y login de usuarios")
+@Tag(name = "1. Autenticación de usuarios", description = "Endpoints autenticación y registro de usuarios")
 public class AuthController {
 
 	@Autowired
@@ -31,6 +32,7 @@ public class AuthController {
 		}
 	}
 
+	@Operation(summary = "Inicio de sesión con email y contraseña")
 	@PostMapping(value = "/login")
 	ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
 		return ResponseEntity.ok(authService.login(request));

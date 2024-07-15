@@ -3,14 +3,31 @@ package com.educacionit.controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+@Controller
 public class AuthControllerWeb {
 
 	@GetMapping(value = "/login")
 	public String loginForm() {
 		return "login";
+	}
+
+	@GetMapping(value = "/admin")
+	public String adminAccess() {
+		return "panel-administrador";
+	}
+
+	@GetMapping(value = "/socio")
+	public String userAccess() {
+		return "panel-socio";
+	}
+
+	@GetMapping("/error/403")
+	public String error403() {
+		return "error/403";
 	}
 
 	@GetMapping(value = "/")
@@ -24,15 +41,5 @@ public class AuthControllerWeb {
 			model.addAttribute("roles", userDetails.getAuthorities());
 		}
 		return "index";
-	}
-
-	@GetMapping(value = "/admin")
-	public String adminAccess() {
-		return "panel-administrador";
-	}
-
-	@GetMapping(value = "/socio")
-	public String userAccess() {
-		return "panel-socio";
 	}
 }
