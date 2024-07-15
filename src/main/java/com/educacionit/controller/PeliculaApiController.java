@@ -2,8 +2,6 @@ package com.educacionit.controller;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -31,7 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Administrador de Películas", description = "Endpoints para administrar películas")
 public class PeliculaApiController {
 
-	private static final Logger logger = LoggerFactory.getLogger(PeliculaApiController.class);
+	//private static final Logger logger = LoggerFactory.getLogger(PeliculaApiController.class);
 
 	@Autowired
 	@Qualifier("peliculaService")
