@@ -56,6 +56,6 @@ public class Orden {
 	private Pelicula pelicula;
 
 	@Schema(description = "Monto total de la orden", requiredMode = Schema.RequiredMode.REQUIRED, example = "6399.99")
-	@Column(name = "monto_total", nullable = false, precision = 10, scale = 2)
+	@Column(name = "monto_total", nullable = false, precision = 10)
 	private Float montoTotal;
 }

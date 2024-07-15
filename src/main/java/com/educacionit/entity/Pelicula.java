@@ -58,17 +58,17 @@ public class Pelicula {
 	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "6399.99")
 	@Column(name = "precio", nullable = true, length = 25)
 	private Float precio;
-	
+
 	@Schema(description = "Tabla de relación películas-géneros")
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "peliculas_generos", joinColumns = @JoinColumn(name = "pelicula_id"), inverseJoinColumns = @JoinColumn(name = "genero_id"))
 	@JsonIgnore
 	private Set<Genero> generos = new HashSet<>();
-	
+
 	public void addRole(Genero genero) {
 		this.generos.add(genero);
 	}
-	
+
 	public Pelicula(String titulo, String director, String url, String portada, Float precio) {
 		this.titulo = titulo;
         this.director = director;

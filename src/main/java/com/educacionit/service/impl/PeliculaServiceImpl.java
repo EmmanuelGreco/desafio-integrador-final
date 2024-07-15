@@ -55,7 +55,7 @@ public class PeliculaServiceImpl implements PeliculaService {
 
 			return peliculaRepository.save(existingPelicula);
 		} else {
-			throw new Exception("La Película con ID: " + id + " NO Existe en la BD!");
+			throw new Exception("La Película con ID: " + id + " NO existe en la BD!");
 		}
 	}
 
