@@ -53,7 +53,6 @@ public class AuthService {
 	}
 
 	public AuthResponse login(LoginRequest request) {
-
 		Authentication authentication = authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
@@ -61,8 +60,7 @@ public class AuthService {
 		UserDetails user = userRepository.findByEmail(request.getEmail()).orElseThrow();
 
 		String token = jwtService.getToken(user);
-		AuthResponse authResponse = new AuthResponse();
-		
+		AuthResponse authResponse = new AuthResponse();		
 		authResponse.setToken(token);
 
 		return authResponse;

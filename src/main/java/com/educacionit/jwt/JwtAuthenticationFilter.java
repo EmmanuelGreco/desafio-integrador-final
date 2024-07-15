@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import jakarta.servlet.FilterChain;
@@ -30,7 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-			throws ServletException, IOException {
+			throws ServletException, IOException {		
 		final String token = getTokenFromRequest(request);
 		final String username;
 
@@ -56,12 +55,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 	private String getTokenFromRequest(HttpServletRequest request) {
 		final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 		
-		if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+		if (authHeader != null && authHeader.startsWith("Bearer ")) {
 			return authHeader.substring(7);
 		}
 		Cookie[] cookies = request.getCookies();
-		if (request.getCookies() != null) {
-			for (Cookie cookie : request.getCookies()) {
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
 				if ("auth_token".equals(cookie.getName())) {
 					return cookie.getValue();
 				}
