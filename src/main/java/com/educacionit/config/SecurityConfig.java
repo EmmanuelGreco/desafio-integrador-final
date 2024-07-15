@@ -36,7 +36,7 @@ public class SecurityConfig {
 					.requestMatchers("/auth/**", "/login", "/error/403").permitAll()
 					.requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 					.requestMatchers("/css/**", "/js/**").permitAll()
-					.requestMatchers("/api/peliculas", "/api/peliculas/**", "/api/peliculas/search").permitAll()
+					.requestMatchers("/api/peliculas", "/api/peliculas/search").permitAll()
 					.requestMatchers("/favicon.ico").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
 					.requestMatchers("/socio/**").hasRole("SOCIO")
