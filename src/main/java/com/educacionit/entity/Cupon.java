@@ -1,5 +1,7 @@
 package com.educacionit.entity;
 
+import java.math.BigDecimal;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,8 +36,8 @@ public class Cupon {
 	private String name;
 
 	@Schema(description = "Valor del cupón", requiredMode = Schema.RequiredMode.REQUIRED, example = "10.0")
-	@Column(nullable = false, precision = 10)
+	@Column(nullable = false, length = 25, precision = 10, scale=2)
 	@NotNull
 	@Min(value = 0, message = "El descuento debe ser mayor o igual a 0 (cero)!")
-	private Float descuento;
+	private BigDecimal descuento;
 }

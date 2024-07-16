@@ -1,16 +1,24 @@
 package com.educacionit.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@NoArgsConstructor
 @Setter
 @Getter
 @ToString
@@ -29,8 +37,9 @@ public class Genero {
 	@Column(name = "nombre", nullable = false, length = 50)
 	private String nombre;
 
-	//@OneToMany(mappedBy = "genero")
-	//private List<Pelicula> peliculas;
+	@ManyToMany(mappedBy = "generos")
+    @JsonIgnore
+    private Set<Pelicula> peliculas = new HashSet<>();
 
 	public Genero(String nombre) {
 		super();

@@ -1,5 +1,6 @@
 package com.educacionit.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,6 +57,6 @@ public class Orden {
 	private Pelicula pelicula;
 
 	@Schema(description = "Monto total de la orden", requiredMode = Schema.RequiredMode.REQUIRED, example = "6399.99")
-	@Column(name = "monto_total", nullable = false, precision = 10)
-	private Float montoTotal;
+	@Column(name = "monto_total", nullable = false, length = 25, precision = 10, scale=2)
+	private BigDecimal montoTotal;
 }

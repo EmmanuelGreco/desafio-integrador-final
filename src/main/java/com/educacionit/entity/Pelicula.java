@@ -1,9 +1,8 @@
 package com.educacionit.entity;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
@@ -55,21 +54,20 @@ public class Pelicula {
 	@Column(name = "portada", nullable = true, length = 255)
 	private String portada;
 
-	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "6399.99")
-	@Column(name = "precio", nullable = true, length = 25)
-	private Float precio;
+	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "63999.99")
+	@Column(name = "precio", nullable = true, length = 25, precision = 10, scale=2)
+	private BigDecimal precio;
 
 	@Schema(description = "Tabla de relación películas-géneros")
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "peliculas_generos", joinColumns = @JoinColumn(name = "pelicula_id"), inverseJoinColumns = @JoinColumn(name = "genero_id"))
-	@JsonIgnore
 	private Set<Genero> generos = new HashSet<>();
 
 	public void addRole(Genero genero) {
 		this.generos.add(genero);
 	}
 
-	public Pelicula(String titulo, String director, String url, String portada, Float precio) {
+	public Pelicula(String titulo, String director, String url, String portada, BigDecimal precio) {
 		this.titulo = titulo;
         this.director = director;
         this.url = url;
