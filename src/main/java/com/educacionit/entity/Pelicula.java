@@ -53,7 +53,7 @@ public class Pelicula {
 	@Column(name = "portada", nullable = true, length = 255)
 	private String portada;
 
-	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "6399.99")
+	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "63999.99")
 	@Column(name = "precio", nullable = true, length = 25)
 	private Float precio;
 
