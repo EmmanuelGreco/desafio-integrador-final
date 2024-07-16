@@ -1,5 +1,6 @@
 package com.educacionit.entity;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,8 +55,8 @@ public class Pelicula {
 	private String portada;
 
 	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "63999.99")
-	@Column(name = "precio", nullable = true, length = 25)
-	private Float precio;
+	@Column(name = "precio", nullable = true, length = 25, precision = 10, scale=2)
+	private BigDecimal precio;
 
 	@Schema(description = "Tabla de relación películas-géneros")
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -66,7 +67,7 @@ public class Pelicula {
 		this.generos.add(genero);
 	}
 
-	public Pelicula(String titulo, String director, String url, String portada, Float precio) {
+	public Pelicula(String titulo, String director, String url, String portada, BigDecimal precio) {
 		this.titulo = titulo;
         this.director = director;
         this.url = url;
