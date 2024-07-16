@@ -80,12 +80,13 @@ function loadMovies(url) {
                                         <h6 class="card-precio">$ ${pelicula.precio}</h6>
                                     </div>
                                     <div class="detail-card">
-                                        <h5>${pelicula.titulo}</h5>
-                                        <p>Director: ${pelicula.director}</p>
-                                        <p>Sitio web oficial: <a href="${pelicula.url}" target="_blank">${pelicula.url}</a></p>
+                                        <h3>${pelicula.titulo}</h3>
                                         <div class="generos-list">
                                             ${generosHTML}
                                         </div>
+                                        <p>Director: ${pelicula.director}</p>
+                                        <p>Sitio web oficial: <a href="${pelicula.url}" target="_blank">${pelicula.url}</a></p>                            
+                                        <p>Precio: $ ${pelicula.precio}</p>
                                         <button class="btn btn-comprar">Comprar</button>
                                     </div>
                                 </div>

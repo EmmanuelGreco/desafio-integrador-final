@@ -80,17 +80,34 @@ html, body {
 	overflow-y: auto;
 }
 
+.detail-card h3 {
+	word-wrap: break-word;
+	margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
 .detail-card p {
 	word-wrap: break-word;
+	margin-top: 0;
+    margin-bottom: 1.5rem;
+}
+
+.detail-card a {
+    color: #ff0000;
+    text-decoration: underline;
 }
 
 .card-img-top {
-	height: 250px;
+	height: 400px;
 	object-fit: cover;
 }
 
 .card:hover .detail-card {
 	display: block;
+}
+
+.generos-list {
+	margin-bottom: 1.5rem;
 }
 
 .btn {
@@ -99,6 +116,7 @@ html, body {
 	transition: background-color 0.3s ease;
 	border-color: #ffffff;
 	border-radius: 5px;
+	margin-top: 1.5rem;
 }
 
 .btn:hover {
