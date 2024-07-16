@@ -180,3 +180,7 @@ html, body {
     font-size: 25px;
     cursor: pointer;
 }
+
+.btn-danger {
+	margin-top: 0;
+}

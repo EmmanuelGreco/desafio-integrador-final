@@ -47,7 +47,12 @@ public class SecurityConfig {
 			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling(exceptionHandler -> exceptionHandler
 					.accessDeniedHandler(accessDeniedHandler()))
-		.build();
+			.logout(logout -> logout
+                    .logoutUrl("/auth/logout")
+                    .logoutSuccessUrl("/login")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID", "auth_token"))
+            .build();
 	}
 
 	@Bean

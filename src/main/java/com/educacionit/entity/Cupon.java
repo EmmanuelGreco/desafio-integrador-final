@@ -36,7 +36,7 @@ public class Cupon {
 	private String name;
 
 	@Schema(description = "Valor del cupón", requiredMode = Schema.RequiredMode.REQUIRED, example = "10.0")
-	@Column(nullable = false, length = 25, precision = 10, scale=2)
+	@Column(nullable = false, precision = 10, scale=2)
 	@NotNull
 	@Min(value = 0, message = "El descuento debe ser mayor o igual a 0 (cero)!")
 	private BigDecimal descuento;

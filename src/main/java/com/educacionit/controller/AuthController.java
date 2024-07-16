@@ -14,17 +14,18 @@ import com.educacionit.service.AuthService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/auth")
-@Tag(name = "Autenticación de usuarios", description = "Endpoints autenticación y registro de usuarios")
+@Tag(name = "Autenticación de Usuarios", description = "Endpoints autenticación y registro de usuarios")
 public class AuthController {
 
 	@Autowired
 	private AuthService authService = null;
 
 	@PostMapping(value = "/register")
-	public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {		
+	public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
 		try {
 			return ResponseEntity.ok(authService.register(request));
 		} catch (Exception ex) {
@@ -36,5 +37,16 @@ public class AuthController {
 	@PostMapping(value = "/login")
 	ResponseEntity<AuthResponse> login(@RequestBody LoginRequest request) {
 		return ResponseEntity.ok(authService.login(request));
+	}
+
+	@Operation(summary = "Cerrar sesión del usuario")
+	@PostMapping(value = "/logout")
+	public ResponseEntity<Void> logout(HttpSession session) {
+		try {
+			session.invalidate();
+			return ResponseEntity.ok().build();
+		} catch (Exception ex) {
+			return ResponseEntity.internalServerError().build();
+		}
 	}
 }
