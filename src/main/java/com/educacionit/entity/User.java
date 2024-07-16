@@ -54,7 +54,7 @@ public class User implements UserDetails {
 
 	@Schema(description = "Nombre del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "Nombre Apellido")
 	@Column(nullable = false, length = 100)
-	private String fullname;
+	private String name;
 
 	@Schema(description = "Password del Usuario", requiredMode = Schema.RequiredMode.REQUIRED, example = "**********")
 	@Column(nullable = false, length = 100)

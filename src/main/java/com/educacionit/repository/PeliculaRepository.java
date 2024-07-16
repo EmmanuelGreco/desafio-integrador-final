@@ -10,6 +10,6 @@ import com.educacionit.entity.Pelicula;
 
 @Repository("peliculaRepository")
 public interface PeliculaRepository extends JpaRepository<Pelicula, Integer> {
-	
+
 	Optional<List<Pelicula>> findByTituloContainingIgnoreCase(String titulo);
 }

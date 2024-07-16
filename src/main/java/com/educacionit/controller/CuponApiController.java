@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/cupones")
-@Tag(name = "Gestión de Cupones", description = "Endpoints para administrar cupones")
+@Tag(name = "Administrador de Cupones", description = "Endpoints para administrar cupones")
 public class CuponApiController {
 
 	@Autowired

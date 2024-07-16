@@ -1,6 +1,7 @@
 package com.educacionit.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.educacionit.entity.Pelicula;
@@ -22,21 +24,23 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/peliculas")
-@Tag(name = "Administrador de Películas", description = "Endpoints para administrar películas")
+@Tag(name = "Administrador de Películas", description = "Endpoints para administrar Películas")
 public class PeliculaApiController {
 
-	//private static final Logger logger = LoggerFactory.getLogger(PeliculaApiController.class);
+	// private static final Logger logger = LoggerFactory.getLogger(PeliculaApiController.class);
 
 	@Autowired
 	@Qualifier("peliculaService")
 	private PeliculaService peliculaService;
 
-	@Operation(summary = "Obtener lista de todas las películas")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Lista de películas obtenida correctamente"),
+	@Operation(summary = "Obtener lista de todas las Películas")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Lista de Películas obtenida correctamente"),
 			@ApiResponse(responseCode = "404", description = "Películas no encontradas", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
 	@GetMapping
@@ -45,7 +49,7 @@ public class PeliculaApiController {
 		return new ResponseEntity<>(peliculas, HttpStatus.OK);
 	}
 
-	@Operation(summary = "Obtener película por ID")
+	@Operation(summary = "Obtener Película por ID")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Película obtenida correctamente"),
 			@ApiResponse(responseCode = "404", description = "Película no encontrada", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
@@ -55,11 +59,21 @@ public class PeliculaApiController {
 
 		if (unaPelicula == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}		
+		}
 		return new ResponseEntity<>(unaPelicula, HttpStatus.OK);
 	}
 
-	@Operation(summary = "Agregar una película")
+	@Operation(summary = "Buscar Películas por título")
+	@GetMapping("/search")
+	public ResponseEntity<List<Pelicula>> findPeliculasByTitulo(@RequestParam("titulo") String titulo) {
+		Optional<List<Pelicula>> peliculas = peliculaService.findByTitulo(titulo);
+		if (peliculas.isPresent() && !peliculas.get().isEmpty()) {
+			return new ResponseEntity<>(peliculas.get(), HttpStatus.OK);
+		}
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
+
+	@Operation(summary = "Agregar una Película")
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", description = "Película creada exitosamente"),
 			@ApiResponse(responseCode = "400", description = "Solicitud incorrecta", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
@@ -69,12 +83,14 @@ public class PeliculaApiController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@Operation(summary = "Actualizar una película")
+	@Operation(summary = "Actualizar una película por ID")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Película actualizada exitosamente"),
 			@ApiResponse(responseCode = "404", description = "Película no encontrada", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })
+	@SecurityRequirement(name = "bearerAuth")
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> updatePelicula(@PathVariable("id") Integer id, @RequestBody Pelicula peliculaModificada) throws Exception {
+	public ResponseEntity<Void> updatePelicula(@PathVariable("id") Integer id, @RequestBody Pelicula peliculaModificada)
+			throws Exception {
 		Pelicula existingPelicula = peliculaService.getPeliculaById(id);
 
 		if (existingPelicula == null) {
@@ -84,7 +100,7 @@ public class PeliculaApiController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@Operation(summary = "Eliminar una película")
+	@Operation(summary = "Eliminar una Película por ID")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Película eliminada exitosamente"),
 			@ApiResponse(responseCode = "404", description = "Película no encontrada", content = @Content),
 			@ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content) })

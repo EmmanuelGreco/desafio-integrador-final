@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/estados")
-@Tag(name = "Gestión de Estados de Órdenes", description = "Endpoints para administrar estados de órdenes")
+@Tag(name = "Administrador de Estados de Órdenes", description = "Endpoints para administrar estados de órdenes")
 public class EstadoApiController {
 
 	@Autowired

@@ -12,7 +12,7 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "API Películas", version = "v1"), security = @SecurityRequirement(name = "bearerAuth"))
+@OpenAPIDefinition(info = @Info(title = "API Películas"), security = @SecurityRequirement(name = "bearerAuth"))
 @SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
 public class OpenApiConfig {
 
