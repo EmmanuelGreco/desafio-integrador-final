@@ -44,50 +44,68 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadMovies(url) {
-	fetch(url)
-		.then(response => response.json())
-		.then(data => {
-			const moviesContainer = document.getElementById('movies-container');
-			if (data.length === 0) {
-				allMoviesLoaded = true;
-			} else {
-				let loadedCount = 0;
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const moviesContainer = document.getElementById('movies-container');
+            if (!data || data.length === 0) {
+                allMoviesLoaded = true;
+            } else {
+                let loadedCount = 0;
 
-				data.forEach(pelicula => {
-					if (!loadedMovies.has(pelicula.id) && loadedCount < batchSize) {
-						loadedMovies.add(pelicula.id);
-						const movieCard = `
-                                <div class="col-md-3 mb-4">
-                            		<div class="card" onmouseover="showDetail(this)" onmouseout="hideDetail(this)">
-                                        <img src="${pelicula.portada}" class="card-img-top" alt="${pelicula.titulo}">
-                                        <div class="card-body">
-                                            <h6 class="card-title">${pelicula.titulo}</h6>
-                                            <h6 class="card-precio">$ ${pelicula.precio}</h6>
+                data.forEach(pelicula => {
+                    if (!loadedMovies.has(pelicula.id) && loadedCount < batchSize) {
+                        loadedMovies.add(pelicula.id);
+
+                        // Construir la lista de géneros si existe
+                        let generosHTML = '';
+                        if (pelicula.generos) {
+                            pelicula.generos.forEach(genero => {
+                                generosHTML += `<span class="badge badge-secondary">${genero.nombre}</span> `;
+                            });
+                        }
+
+                        // Construir la tarjeta de película con los géneros
+                        const movieCard = `
+                            <div class="col-md-3 mb-4">
+                                <div class="card" onmouseover="showDetail(this)" onmouseout="hideDetail(this)">
+                                    <img src="${pelicula.portada}" class="card-img-top" alt="${pelicula.titulo}">
+                                    <div class="card-body">
+                                        <h6 class="card-title">${pelicula.titulo}</h6>
+                                        <h6 class="card-precio">$ ${pelicula.precio}</h6>
+                                    </div>
+                                    <div class="detail-card">
+                                        <h5>${pelicula.titulo}</h5>
+                                        <p>Director: ${pelicula.director}</p>
+                                        <p>Sitio web oficial: <a href="${pelicula.url}" target="_blank">${pelicula.url}</a></p>
+                                        <div class="generos-list">
+                                            ${generosHTML}
                                         </div>
-                                        <div class="detail-card">
-	                                        <h5>${pelicula.titulo}</h5>
-	                                        <p>Director: ${pelicula.director}</p>
-	                                        <p>Sitio web oficial: <a href="${pelicula.url}" target="_blank">${pelicula.url}</a></p>
-	                                        <button class="btn btn-comprar">Comprar</button>
-                                    	</div>
+                                        <button class="btn btn-comprar">Comprar</button>
                                     </div>
                                 </div>
-                            `;
-						moviesContainer.insertAdjacentHTML('beforeend', movieCard);
-						loadedCount++;
-					}
-				});
+                            </div>
+                        `;
+                        moviesContainer.insertAdjacentHTML('beforeend', movieCard);
+                        loadedCount++;
+                    }
+                });
 
-				if (loadedCount < batchSize) {
-					allMoviesLoaded = true;
-				}
-			}
-			isFetching = false;
-		})
-		.catch(error => {
-			console.error('Error fetching movies:', error);
-			isFetching = false;
-		});
+                if (loadedCount < batchSize) {
+                    allMoviesLoaded = true;
+                }
+            }
+            isFetching = false;
+        })
+        .catch(error => {
+            console.error('Error fetching movies:', error);
+            isFetching = false;
+        });
 }
 
 function showDetail(card) {

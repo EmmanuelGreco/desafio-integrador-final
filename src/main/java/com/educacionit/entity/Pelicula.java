@@ -62,7 +62,6 @@ public class Pelicula {
 	@Schema(description = "Tabla de relación películas-géneros")
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "peliculas_generos", joinColumns = @JoinColumn(name = "pelicula_id"), inverseJoinColumns = @JoinColumn(name = "genero_id"))
-	@JsonIgnore
 	private Set<Genero> generos = new HashSet<>();
 
 	public void addRole(Genero genero) {
