@@ -1,99 +1,101 @@
-$(document).ready(function() {
-    let page = 0;
+let currentPage = 1;
+let query = '';
+let isFetching = false;
+let allMoviesLoaded = false;
+const batchSize = 8; // Cargar 8 películas a la vez
 
-    function loadMovies(page) {
-        $.ajax({
-            url: `/api/peliculas?page=${page}`,
-            method: 'GET',
-            success: function(data) {
-                data.forEach(function(movie) {
-                    const movieCard = `
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="${movie.portada}" class="card-img-top" alt="${movie.titulo}">
-                                <div class="card-body">
-                                    <h5 class="card-title">${movie.titulo}</h5>
-                                    <p class="card-text">${movie.director}</p>
-                                    <button class="btn btn-primary btn-detail" data-id="${movie.id}">Detalle</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    $('#movieContainer').append(movieCard);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error al cargar las películas:', error);
-            }
-        });
-    }
+// Set para evitar películas duplicadas
+const loadedMovies = new Set();
 
-    function loadMovieDetail(id) {
-        $.ajax({
-            url: `/api/peliculas/${id}`,
-            method: 'GET',
-            success: function(movie) {
-                const movieDetail = `
-                    <div class="text-center">
-                        <img src="${movie.portada}" alt="${movie.titulo}" class="img-fluid">
-                    </div>
-                    <h2>${movie.titulo}</h2>
-                    <p>Director: ${movie.director}</p>
-                    <p>URL: <a href="${movie.url}" target="_blank">${movie.url}</a></p>
-                    <p>Precio: ${movie.precio}</p>
-                `;
-                $('#movieDetailContent').html(movieDetail);
-                $('#movieDetailModal').modal('show');
-            },
-            error: function(xhr, status, error) {
-                console.error('Error al cargar el detalle de la película:', error);
-            }
-        });
-    }
+document.addEventListener('DOMContentLoaded', function() {
+	const moviesContainer = document.getElementById('movies-container');
 
-    // Cargar películas al hacer scroll
-    $(window).on('scroll', function() {
-        if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
-            page++;
-            loadMovies(page);
-        }
-    });
+	loadMovies(`/api/peliculas?page=${currentPage}&size=${batchSize}`);
 
-    // Inicialmente cargar la primera página de películas
-    loadMovies(page);
+	document.getElementById('search').addEventListener('input', function(event) {
+		query = event.target.value.trim();
+		currentPage = 1;
+		allMoviesLoaded = false;
+		loadedMovies.clear();
+		moviesContainer.innerHTML = '';
+		if (query) {
+			loadMovies(`/api/peliculas/search?titulo=${encodeURIComponent(query)}&page=${currentPage}&size=${batchSize}`);
+		} else {
+			loadMovies(`/api/peliculas?page=${currentPage}&size=${batchSize}`);
+		}
+	});
 
-    $('#searchButton').click(function() {
-        const query = $('#searchInput').val();
-        $.ajax({
-            url: `/api/peliculas/search?query=${query}`,
-            method: 'GET',
-            success: function(data) {
-                $('#movieContainer').empty();
-                data.forEach(function(movie) {
-                    const movieCard = `
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="${movie.portada}" class="card-img-top" alt="${movie.titulo}">
-                                <div class="card-body">
-                                    <h5 class="card-title">${movie.titulo}</h5>
-                                    <p class="card-text">${movie.director}</p>
-                                    <button class="btn btn-primary btn-detail" data-id="${movie.id}">Detalle</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    $('#movieContainer').append(movieCard);
-                });
-            },
-            error: function(xhr, status, error) {
-                console.error('Error al buscar las películas:', error);
-            }
-        });
-    });
+	window.addEventListener('scroll', function() {
+		const moviesLoaded = document.querySelectorAll('#movies-container .card').length;
+		const moviesContainerHeight = moviesContainer.offsetHeight;
+		const scrollY = window.scrollY;
+		const windowInnerHeight = window.innerHeight;
 
-    $(document).on('click', '.btn-detail', function() {
-	    const id = $(this).data('id');
-	    console.log('Detalle de película ID:', id); // Verifica que el ID es correcto
-	    loadMovieDetail(id);
+		if (!allMoviesLoaded && !isFetching && (windowInnerHeight + scrollY >= moviesContainerHeight - 100)) {
+			currentPage++;
+			isFetching = true;
+			if (query) {
+				loadMovies(`/api/peliculas/search?titulo=${encodeURIComponent(query)}&page=${currentPage}&size=${batchSize}`);
+			} else {
+				loadMovies(`/api/peliculas?page=${currentPage}&size=${batchSize}`);
+			}
+		}
 	});
 });
+
+function loadMovies(url) {
+	fetch(url)
+		.then(response => response.json())
+		.then(data => {
+			const moviesContainer = document.getElementById('movies-container');
+			if (data.length === 0) {
+				allMoviesLoaded = true;
+			} else {
+				let loadedCount = 0;
+
+				data.forEach(pelicula => {
+					if (!loadedMovies.has(pelicula.id) && loadedCount < batchSize) {
+						loadedMovies.add(pelicula.id);
+						const movieCard = `
+                                <div class="col-md-3 mb-4">
+                            		<div class="card" onmouseover="showDetail(this)" onmouseout="hideDetail(this)">
+                                        <img src="${pelicula.portada}" class="card-img-top" alt="${pelicula.titulo}">
+                                        <div class="card-body">
+                                            <h6 class="card-title">${pelicula.titulo}</h6>
+                                            <h6 class="card-precio">$ ${pelicula.precio}</h6>
+                                        </div>
+                                        <div class="detail-card">
+	                                        <h5>${pelicula.titulo}</h5>
+	                                        <p>Director: ${pelicula.director}</p>
+	                                        <p>Sitio web oficial: <a href="${pelicula.url}" target="_blank">${pelicula.url}</a></p>
+	                                        <button class="btn btn-comprar">Comprar</button>
+                                    	</div>
+                                    </div>
+                                </div>
+                            `;
+						moviesContainer.insertAdjacentHTML('beforeend', movieCard);
+						loadedCount++;
+					}
+				});
+
+				if (loadedCount < batchSize) {
+					allMoviesLoaded = true;
+				}
+			}
+			isFetching = false;
+		})
+		.catch(error => {
+			console.error('Error fetching movies:', error);
+			isFetching = false;
+		});
+}
+
+function showDetail(card) {
+	const detailCard = card.querySelector('.detail-card');
+	detailCard.style.display = 'block';
+}
+
+function hideDetail(card) {
+	const detailCard = card.querySelector('.detail-card');
+	detailCard.style.display = 'none';
+}
