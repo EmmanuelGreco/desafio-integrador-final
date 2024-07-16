@@ -19,6 +19,8 @@ En la información de Películas se puede observar:
 - Imagen promocional
 - Precio
 
+![Texto alternativo](diagrama-sql.png)
+
 ### Tecnologías utilizadas
 - Java 17 - Maven - MySQL - API REST - Hibernate - Spring - Spring Security - Swagger- Thymeleaf - Lombok - JJWT - Git
 
