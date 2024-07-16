@@ -12,16 +12,6 @@ public class AuthControllerWeb {
 		return "login";
 	}
 
-	@GetMapping(value = "/admin")
-	public String adminAccess() {
-		return "panel-administrador";
-	}
-
-	@GetMapping(value = "/socio")
-	public String userAccess() {
-		return "panel-socio";
-	}
-
 	@GetMapping("/error/403")
 	public String error403() {
 		return "error/403";

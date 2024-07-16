@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/ordenes")
-@Tag(name = "Gestión de Órdenes", description = "Endpoints para administrar de órdenes")
+@Tag(name = "Administrador de Órdenes", description = "Endpoints para administrar de órdenes")
 public class OrdenApiController {
 
 	@Autowired

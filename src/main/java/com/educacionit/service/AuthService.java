@@ -39,7 +39,7 @@ public class AuthService {
 	public AuthResponse register(RegisterRequest request) {
 		User user = new User();
 		user.setEmail(request.getEmail());
-		user.setFullname(request.getFullname());
+		user.setName(request.getName());
 		user.setPassword(passwordEncoder.encode(request.getPassword()));
 
 		Role defaultRol = roleRepository.findByName("ROLE_SOCIO").get();
@@ -65,4 +65,8 @@ public class AuthService {
 
 		return authResponse;
 	}
+	
+	public void logout() {
+        SecurityContextHolder.clearContext();
+    }
 }

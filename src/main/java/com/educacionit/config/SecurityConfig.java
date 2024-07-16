@@ -38,8 +38,8 @@ public class SecurityConfig {
 					.requestMatchers("/css/**", "/js/**").permitAll()
 					.requestMatchers("/api/peliculas", "/api/peliculas/search").permitAll()
 					.requestMatchers("/favicon.ico").permitAll()
-					.requestMatchers("/admin/**").hasRole("ADMIN")
-					.requestMatchers("/socio/**").hasRole("SOCIO")
+					//.requestMatchers("/admin/**").hasRole("ADMIN")
+					//.requestMatchers("/socio/**").hasRole("SOCIO")
 					.anyRequest().authenticated())
 			.sessionManagement(sessionManager -> sessionManager
 					.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
