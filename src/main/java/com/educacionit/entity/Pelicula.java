@@ -55,7 +55,7 @@ public class Pelicula {
 	private String portada;
 
 	@Schema(description = "Precio de la película", requiredMode = Schema.RequiredMode.NOT_REQUIRED, example = "63999.99")
-	@Column(name = "precio", nullable = true, length = 25, precision = 10, scale=2)
+	@Column(name = "precio", nullable = true, precision = 10, scale=2)
 	private BigDecimal precio;
 
 	@Schema(description = "Tabla de relación películas-géneros")

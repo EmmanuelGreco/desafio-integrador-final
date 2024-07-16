@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 403</title>
+</head>
+
+<body>
+    <div th:replace="~{layout}">
+        <div th:fragment="content">
+            <div class="d-flex inicio">
+                <h1 class="mt-5" th:text="${pageTitle}"></h1>
+                <img src="/img/error403.jpg" alt="Error 403" class="imagen-error">
+                <div class="alert alert-danger mt-3" role="alert">
+                    <p th:text="${mensajeError}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
