@@ -19,15 +19,15 @@ function login() {
 		},
 		body: JSON.stringify({ email: email, password: password })
 	})
-		.then(response => response.json())
-		.then(data => {
-			if (data.token) {
-				localStorage.setItem('token', data.token);
-				setCookie('auth_token', data.token, 7);
-				window.location.href = '/';
-			} else {
-				alert('Login failed');
-			}
-		})
-		.catch(error => console.error('Error:', error));
+	.then(response => response.json())
+	.then(data => {
+		if (data.token) {
+			localStorage.setItem('token', data.token);
+			setCookie('auth_token', data.token, 7);
+			window.location.href = '/';
+		} else {
+			alert('Login failed');
+		}
+	})
+	.catch(error => console.error('Error:', error));
 }
